@@ -1,31 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 interface PostData {
-  id: number
-  userId: number
-  title: string
-  body: string
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
 }
 
 interface PostProps {
-  id: number
+  id: number;
 }
 
 export default function Post({ id }: PostProps) {
-  const [post, setPost] = useState<PostData | null>(null)
+  const [post, setPost] = useState<PostData | null>(null);
 
   useEffect(() => {
     async function fetchPost() {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
-      const data = await response.json()
-      setPost(data)
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+      );
+      const data = await response.json();
+      setPost(data);
     }
 
-    fetchPost()
-  }, [id])
+    fetchPost();
+  }, [id]);
 
   if (!post) {
-    return <p>Laddar inlägg...</p>
+    return <p>Laddar inlägg...</p>;
   }
 
   return (
@@ -33,5 +35,5 @@ export default function Post({ id }: PostProps) {
       <h3>{post.title}</h3>
       <p>{post.body}</p>
     </article>
-  )
+  );
 }
